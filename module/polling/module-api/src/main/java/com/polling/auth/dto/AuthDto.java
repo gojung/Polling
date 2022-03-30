@@ -1,6 +1,5 @@
 package com.polling.auth.dto;
 
-import com.polling.entity.member.status.OAuthType;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
