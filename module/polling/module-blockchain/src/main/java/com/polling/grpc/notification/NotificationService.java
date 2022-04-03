@@ -1,6 +1,7 @@
 package com.polling.grpc.notification;
 
 import com.google.gson.Gson;
+import com.polling.grpc.*;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import java.io.UnsupportedEncodingException;
@@ -45,7 +46,7 @@ public class NotificationService extends NotificationServiceGrpc.NotificationSer
 
   @Override
   public void sendNotification(ListOfNotificationRequest request,
-      StreamObserver<NotificationResponse> responseObserver) {
+                               StreamObserver<NotificationResponse> responseObserver) {
     try {
       log.info("sendNotification : {}", request.toString());
 

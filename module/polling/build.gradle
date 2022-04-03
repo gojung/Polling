@@ -100,7 +100,6 @@ subprojects {
 
 project(':module-api') {
     dependencies {
-        implementation project(':module-common')
         implementation project(':module-core')
         implementation project(':grpc-common')
     }
@@ -109,14 +108,10 @@ project(':module-api') {
 project(':module-blockchain') {
     dependencies {
         implementation project(':grpc-common')
-    }
-}
-
-project(':module-common') {
-    dependencies {
         implementation project(':module-core')
     }
 }
+
 
 project(':grpc-common') {
     dependencies {

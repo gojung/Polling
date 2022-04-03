@@ -9,6 +9,7 @@ dependencyManagement {
 
 dependencies {
     implementation project(':grpc-common')
+    implementation project(':module-core')
     /*grpc*/
     implementation 'com.linecorp.armeria:armeria-grpc'
     implementation 'com.linecorp.armeria:armeria-spring-boot2-webflux-starter'
