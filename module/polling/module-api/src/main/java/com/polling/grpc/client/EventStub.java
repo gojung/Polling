@@ -1,10 +1,7 @@
 package com.polling.grpc.client;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.polling.grpc.EventRequest;
-import com.polling.grpc.EventResponse;
 import com.polling.grpc.EventServiceGrpc;
-import com.polling.grpc.Type;
 import com.polling.grpc.WinningRequest;
 import com.polling.grpc.WinningResponse;
 import com.polling.grpc.client.dto.request.WinningRequestDto;
@@ -19,44 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/grpc/future")
-public class FutureStub extends AbstractStub {
+@RequestMapping("/api/event")
+public class EventStub extends AbstractStub {
 
   private EventServiceGrpc.EventServiceFutureStub stub() {
     return EventServiceGrpc.newFutureStub(channel())
         .withDeadline(Deadline.after(3000, TimeUnit.MILLISECONDS));
   }
 
-  @PostMapping("/sendEvent")
-  public String sendEventTest() {
-
-    EventServiceGrpc.EventServiceFutureStub stub = stub();
-
-    EventRequest request = EventRequest.newBuilder()
-        .setId(1)
-        .setType(Type.NORMAL)
-        .build();
-
-    ListenableFuture<EventResponse> responseFuture = stub.sendEvent(request);
-
-    try {
-      EventResponse response = responseFuture.get(5000, TimeUnit.MILLISECONDS); //5 sec
-      log.info("response : {}", response.toString());
-
-    } catch (Exception e) {
-      log.error(e.getMessage(), e);
-    }
-
-    return "OK";
-  }
-
-  @PostMapping("/winning")
+  @PostMapping
   public String winning(@RequestBody WinningRequestDto requestDto) {
 
     EventServiceGrpc.EventServiceFutureStub stub = stub();
 
     WinningRequest request = WinningRequest.newBuilder()
-        .setType(Type.NORMAL)
         .setEmail(requestDto.getUserEmail())
         .setGiftType(requestDto.getGiftType())
         .build();
@@ -65,7 +38,6 @@ public class FutureStub extends AbstractStub {
 
     try {
       WinningResponse response = responseFuture.get(300000, TimeUnit.MILLISECONDS); //300 sec
-      log.info("response : {}", response.toString());
 
     } catch (Exception e) {
       log.error(e.getMessage(), e);

@@ -1,4 +1,4 @@
-package com.polling.grpc.notification;
+package com.polling.grpc.notification.service;
 
 import com.google.gson.Gson;
 import com.polling.grpc.ListOfNotificationRequest;
@@ -6,6 +6,8 @@ import com.polling.grpc.NotificationRequest;
 import com.polling.grpc.NotificationResponse;
 import com.polling.grpc.NotificationServiceGrpc;
 import com.polling.grpc.ResultStatus;
+import com.polling.grpc.notification.dto.request.SendSMSApiRequestDto;
+import com.polling.grpc.notification.dto.request.SendSMSRequestDto;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import java.io.UnsupportedEncodingException;
@@ -53,9 +55,7 @@ public class NotificationService extends NotificationServiceGrpc.NotificationSer
   public void sendNotification(ListOfNotificationRequest request,
       StreamObserver<NotificationResponse> responseObserver) {
     try {
-      log.info("sendNotification : {}", request.toString());
-
-      //proto를 arrayList로 매핑하고
+      //protobuf를 arrayList로 매핑
       int size = request.getNotificationRequestCount();
       List<SendSMSRequestDto> message = new ArrayList<>();
       for (int i = 0; i < size; i++) {

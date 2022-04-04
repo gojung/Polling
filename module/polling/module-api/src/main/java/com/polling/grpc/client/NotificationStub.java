@@ -37,12 +37,10 @@ public class NotificationStub extends AbstractStub {
         .build();
     ListOfNotificationRequest req = ListOfNotificationRequest.newBuilder()
         .addNotificationRequest(request).build();
-
     ListenableFuture<NotificationResponse> responseFuture = stub.sendNotification(req);
     SMSCodeResponseDto responseDto = new SMSCodeResponseDto();
     try {
       NotificationResponse response = responseFuture.get(5000, TimeUnit.MILLISECONDS); //5 sec
-      log.info("response : {}", response.getRandomCode());
       responseDto.setCode(response.getRandomCode());
 
     } catch (Exception e) {

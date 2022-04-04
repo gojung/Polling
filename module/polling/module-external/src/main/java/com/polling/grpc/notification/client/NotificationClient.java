@@ -1,7 +1,10 @@
-package com.polling.grpc.notification;
+package com.polling.grpc.notification.client;
 
 import com.polling.exception.CustomErrorResult;
 import com.polling.exception.CustomException;
+import com.polling.grpc.notification.dto.request.SendSMSApiRequestDto;
+import com.polling.grpc.notification.dto.request.SendSMSRequestDto;
+import com.polling.grpc.notification.dto.response.NotificationSmsResponse;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;

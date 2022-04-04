@@ -43,8 +43,9 @@ public class Member extends BaseTimeEntity {
   private OAuthType oauthType;
 
   @Builder
-  public Member(String nickname, String email, String password, String phoneNumber,
+  public Member(String nickname, String wallet, String email, String password, String phoneNumber,
       OAuthType oauthType, String oauthId) {
+    this.wallet = wallet;
     this.nickname = nickname;
     this.email = email;
     this.password = password;

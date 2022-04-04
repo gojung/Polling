@@ -53,22 +53,9 @@ MemberService {
 
   @Trace
   @Transactional
-  public void addRole(Long memberId, String memberRole) {
-    Member member = getMember(memberId);
-    MemberRole role = MemberRole.findByMethod(memberRole);
-    member.addRole(role);
-  }
-
-  @Trace
-  @Transactional
   public void addAdminRole(Long memberId) {
     Member member = getMember(memberId);
     member.addRole(MemberRole.ROLE_ADMIN);
-  }
-
-  public void changeWallet(ChangeWalletRequestDto requestDto) {
-    Member member = getMember(requestDto.getMemberId());
-    member.changeWallet(requestDto.getWallet());
   }
 
   private void checkDuplicateMemberEmail(String email) {

@@ -87,11 +87,4 @@ public class MemberController {
     return ResponseEntity.status(200).build();
   }
 
-  @Trace
-  @PatchMapping("/wallet")
-  @ApiOperation(value = "임시용 멤버에 어드민 권한 추가")
-  public ResponseEntity<Void> changeRole(@RequestBody ChangeWalletRequestDto requestDto) {
-    memberService.changeWallet(requestDto);
-    return ResponseEntity.status(200).build();
-  }
 }
