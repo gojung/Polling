@@ -2,9 +2,9 @@ package com.polling.grpc.client;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import com.polling.grpc.EventServiceGrpc;
-import com.polling.grpc.WinningRequest;
-import com.polling.grpc.WinningResponse;
-import com.polling.grpc.client.dto.request.WinningRequestDto;
+import com.polling.grpc.MailRequest;
+import com.polling.grpc.MailResponse;
+import com.polling.grpc.client.dto.request.SendMailRequestDto;
 import io.grpc.Deadline;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/event")
-public class EventStub extends AbstractStub {
+@RequestMapping("/api/notify/mail")
+public class NotificationMailStub extends AbstractStub {
 
   private EventServiceGrpc.EventServiceFutureStub stub() {
     return EventServiceGrpc.newFutureStub(channel())
@@ -25,19 +25,19 @@ public class EventStub extends AbstractStub {
   }
 
   @PostMapping
-  public String winning(@RequestBody WinningRequestDto requestDto) {
+  public String winning(@RequestBody SendMailRequestDto requestDto) {
 
     EventServiceGrpc.EventServiceFutureStub stub = stub();
 
-    WinningRequest request = WinningRequest.newBuilder()
+    MailRequest request = MailRequest.newBuilder()
         .setEmail(requestDto.getUserEmail())
         .setGiftType(requestDto.getGiftType())
         .build();
 
-    ListenableFuture<WinningResponse> responseFuture = stub.winning(request);
+    ListenableFuture<MailResponse> responseFuture = stub.sendReward(request);
 
     try {
-      WinningResponse response = responseFuture.get(300000, TimeUnit.MILLISECONDS); //300 sec
+      MailResponse response = responseFuture.get(300000, TimeUnit.MILLISECONDS); //300 sec
 
     } catch (Exception e) {
       log.error(e.getMessage(), e);

@@ -3,9 +3,9 @@ package com.polling.grpc.notification.service;
 import com.polling.aop.annotation.Trace;
 import com.polling.grpc.EventServiceGrpc;
 import com.polling.grpc.GiftType;
+import com.polling.grpc.MailRequest;
+import com.polling.grpc.MailResponse;
 import com.polling.grpc.ResultStatus;
-import com.polling.grpc.WinningRequest;
-import com.polling.grpc.WinningResponse;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class EventService extends EventServiceGrpc.EventServiceImplBase {
+public class NotificationMailService extends EventServiceGrpc.EventServiceImplBase {
 
   private final JavaMailSender mailSender;
 
@@ -27,15 +27,15 @@ public class EventService extends EventServiceGrpc.EventServiceImplBase {
 
   @Trace
   @Override
-  public void winning(WinningRequest request,
-      StreamObserver<WinningResponse> responseObserver) {
+  public void sendReward(MailRequest request,
+      StreamObserver<MailResponse> responseObserver) {
     try {
       sendMail(request.getEmail(), request.getGiftType());
       responseObserver.onNext(
-          WinningResponse.newBuilder()
+          MailResponse.newBuilder()
               .setStatus(ResultStatus.newBuilder()
                   .setCode(Status.OK.getCode().value())
-                  .setMessage("Winning SUCCESS!!!")
+                  .setMessage("get reward SUCCESS!!!")
                   .build())
               .setResult("Success Event")
               .build()

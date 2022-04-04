@@ -34,7 +34,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class NotificationService extends NotificationServiceGrpc.NotificationServiceImplBase {
+public class NotificationSmsService extends NotificationServiceGrpc.NotificationServiceImplBase {
 
   //    private final NotificationClient notificationClient;
   private final Gson gson;
@@ -45,6 +45,7 @@ public class NotificationService extends NotificationServiceGrpc.NotificationSer
   private String accessKey;
   @Value("${sms.secretkey}")
   private String secretKey;
+
 
   /*WebClient*/
 //    public void sendSms_webClient(SendSMSRequestDto requestDto) {

@@ -1,10 +1,10 @@
 package com.polling.grpc.client;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.polling.grpc.ListOfNotificationRequest;
-import com.polling.grpc.NotificationRequest;
-import com.polling.grpc.NotificationResponse;
 import com.polling.grpc.NotificationServiceGrpc;
+import com.polling.grpc.NotificationSmsService.ListOfNotificationRequest;
+import com.polling.grpc.NotificationSmsService.NotificationRequest;
+import com.polling.grpc.NotificationSmsService.NotificationResponse;
 import com.polling.grpc.client.dto.request.SendSMSRequestDto;
 import com.polling.member.dto.response.SMSCodeResponseDto;
 import io.grpc.Deadline;
@@ -19,15 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/notify")
-public class NotificationStub extends AbstractStub {
+@RequestMapping("/api/notify/sms")
+public class NotificationSmsStub extends AbstractStub {
 
   private NotificationServiceGrpc.NotificationServiceFutureStub stub() {
     return NotificationServiceGrpc.newFutureStub(channel())
         .withDeadline(Deadline.after(3000, TimeUnit.MILLISECONDS));
   }
 
-  @PostMapping("/sms")
+  @PostMapping
   public ResponseEntity<SMSCodeResponseDto> sendEventTest(
       @RequestBody SendSMSRequestDto requestDto) {
     NotificationServiceGrpc.NotificationServiceFutureStub stub = stub();
@@ -48,4 +48,5 @@ public class NotificationStub extends AbstractStub {
     }
     return ResponseEntity.status(200).body(responseDto);
   }
+
 }

@@ -25,7 +25,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class NotificationClient {
+public class NotificationSmsClient {
 
   private static final String SENDER = "01065752938";
   private final WebClient webClient = WebClient.builder().build();

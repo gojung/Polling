@@ -14,7 +14,7 @@ service EventService {
    * - unary RPC
    * - Client 가 요청을 보내고 Server 가 응답하는 형태
    */
-  rpc winning(WinningRequest) returns (WinningResponse) {}
+  rpc sendReward(MailRequest) returns (MailResponse) {}
 }
 
 enum GiftType {
@@ -23,12 +23,12 @@ enum GiftType {
   FREE_PARTICLE = 2;
 }
 
-message WinningRequest {
+message MailRequest {
   string email = 1;
   GiftType giftType = 2;
 }
 
-message WinningResponse {
+message MailResponse {
   ResultStatus status = 1;
   string result = 2;
 }
