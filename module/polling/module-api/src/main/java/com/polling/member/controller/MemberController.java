@@ -5,6 +5,7 @@ import com.polling.aop.annotation.Trace;
 import com.polling.auth.CurrentUser;
 import com.polling.auth.dto.MemberDto;
 import com.polling.member.dto.request.ChangePasswordRequestDto;
+import com.polling.member.dto.request.ChangeWalletRequestDto;
 import com.polling.member.dto.request.SaveNativeMemberRequestDto;
 import com.polling.member.dto.response.FindMemberResponseDto;
 import com.polling.member.repository.MemberRepository;
@@ -79,18 +80,18 @@ public class MemberController {
   }
 
   @Trace
-  @PatchMapping("/role/{id}")
-  @ApiOperation(value = "회원 권한 수정")
-  public ResponseEntity<Void> changeRole(@PathVariable Long id, String memberRole) {
-    memberService.addRole(id, memberRole);
-    return ResponseEntity.status(200).build();
-  }
-
-  @Trace
   @PatchMapping("/role/admin/{id}")
   @ApiOperation(value = "임시용 멤버에 어드민 권한 추가")
   public ResponseEntity<Void> changeRole(@PathVariable Long id) {
     memberService.addAdminRole(id);
+    return ResponseEntity.status(200).build();
+  }
+
+  @Trace
+  @PatchMapping("/wallet")
+  @ApiOperation(value = "임시용 멤버에 어드민 권한 추가")
+  public ResponseEntity<Void> changeRole(@RequestBody ChangeWalletRequestDto requestDto) {
+    memberService.changeWallet(requestDto);
     return ResponseEntity.status(200).build();
   }
 }

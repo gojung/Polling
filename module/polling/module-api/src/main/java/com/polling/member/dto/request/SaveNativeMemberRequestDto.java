@@ -20,8 +20,6 @@ public class SaveNativeMemberRequestDto {
   @NotNull
   private String nickname;
   @NotNull
-  private String wallet;
-  @NotNull
   private String email;
   @NotNull
   private String password;
@@ -33,7 +31,6 @@ public class SaveNativeMemberRequestDto {
   public Member toEntity() {
     Member member = Member.builder()
         .nickname(nickname)
-        .wallet(wallet)
         .email(email)
         .password(password)
         .phoneNumber(phoneNumber)

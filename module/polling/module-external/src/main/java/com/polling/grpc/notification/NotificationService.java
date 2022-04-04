@@ -36,15 +36,13 @@ public class NotificationService extends NotificationServiceGrpc.NotificationSer
 
   //    private final NotificationClient notificationClient;
   private final Gson gson;
-
+  private final String FROM = "01065752938";
   @Value("${sms.serviceid}")
   private String serviceId;
   @Value("${sms.accesskey}")
   private String accessKey;
   @Value("${sms.secretkey}")
   private String secretKey;
-
-  private final String FROM = "01065752938";
 
   /*WebClient*/
 //    public void sendSms_webClient(SendSMSRequestDto requestDto) {
@@ -94,7 +92,7 @@ public class NotificationService extends NotificationServiceGrpc.NotificationSer
     String randomCode = (RandomStringUtils.randomNumeric(6));
 
     SendSMSApiRequestDto smsRequest = new SendSMSApiRequestDto("SMS", "COMM", "82",
-            FROM, randomCode, messages);
+        FROM, randomCode, messages);
     String jsonBody = gson.toJson(smsRequest);
 
     HttpHeaders headers = new HttpHeaders();

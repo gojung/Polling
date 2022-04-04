@@ -4,6 +4,7 @@ import com.polling.aop.annotation.Trace;
 import com.polling.exception.CustomErrorResult;
 import com.polling.exception.CustomException;
 import com.polling.member.dto.request.ChangePasswordRequestDto;
+import com.polling.member.dto.request.ChangeWalletRequestDto;
 import com.polling.member.dto.request.SaveNativeMemberRequestDto;
 import com.polling.member.dto.response.FindMemberResponseDto;
 import com.polling.member.entity.Member;
@@ -65,6 +66,11 @@ MemberService {
     member.addRole(MemberRole.ROLE_ADMIN);
   }
 
+  public void changeWallet(ChangeWalletRequestDto requestDto) {
+    Member member = getMember(requestDto.getMemberId());
+    member.changeWallet(requestDto.getWallet());
+  }
+
   private void checkDuplicateMemberEmail(String email) {
     if (memberRepository.existsByEmail(email)) {
       throw new CustomException(CustomErrorResult.DUPLICATE_EMAIL);
@@ -81,4 +87,5 @@ MemberService {
     return memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(CustomErrorResult.USER_NOT_FOUND));
   }
+
 }

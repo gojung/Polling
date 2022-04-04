@@ -1,18 +1,20 @@
 package com.polling.grpc.client;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.polling.grpc.*;
+import com.polling.grpc.ListOfNotificationRequest;
+import com.polling.grpc.NotificationRequest;
+import com.polling.grpc.NotificationResponse;
+import com.polling.grpc.NotificationServiceGrpc;
 import com.polling.grpc.client.dto.request.SendSMSRequestDto;
 import com.polling.member.dto.response.SMSCodeResponseDto;
 import io.grpc.Deadline;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.concurrent.TimeUnit;
 
 
 @Slf4j
@@ -26,15 +28,15 @@ public class NotificationStub extends AbstractStub {
   }
 
   @PostMapping("/sms")
-  public ResponseEntity<SMSCodeResponseDto> sendEventTest(@RequestBody SendSMSRequestDto requestDto) {
+  public ResponseEntity<SMSCodeResponseDto> sendEventTest(
+      @RequestBody SendSMSRequestDto requestDto) {
     NotificationServiceGrpc.NotificationServiceFutureStub stub = stub();
     NotificationRequest request = NotificationRequest.newBuilder()
         .setTo(requestDto.getTo())
         .setContent(requestDto.getContent())
         .build();
     ListOfNotificationRequest req = ListOfNotificationRequest.newBuilder()
-            .addNotificationRequest(request).build();
-
+        .addNotificationRequest(request).build();
 
     ListenableFuture<NotificationResponse> responseFuture = stub.sendNotification(req);
     SMSCodeResponseDto responseDto = new SMSCodeResponseDto();
