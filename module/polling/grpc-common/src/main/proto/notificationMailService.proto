@@ -1,5 +1,5 @@
 syntax = "proto3";
-package com.polling.grpc;
+package com.polling.grpc.notification.service;
 
 option java_multiple_files = true;
 
@@ -7,13 +7,7 @@ option java_package = "com.polling.grpc";
 
 import "common.proto";
 
-service EventService {
-
-  /**
-   * Server(1) : Client(1)
-   * - unary RPC
-   * - Client 가 요청을 보내고 Server 가 응답하는 형태
-   */
+service NotificationMailService {
   rpc sendReward(MailRequest) returns (MailResponse) {}
 }
 

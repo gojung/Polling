@@ -1,4 +1,4 @@
-package com.polling.grpc.config;
+package com.polling.grpc.notification.config;
 
 import com.linecorp.armeria.common.grpc.GrpcSerializationFormats;
 import com.linecorp.armeria.server.docs.DocService;
@@ -28,7 +28,7 @@ public class ArmeriaConfig {
 
       serverBuilder
           .service(GrpcService.builder()
-//              .addService(notificationMailService)
+              .addService(notificationMailService)
               .addService(NotificationSmsService)
               .supportedSerializationFormats(GrpcSerializationFormats.values())
               .enableUnframedRequests(true)

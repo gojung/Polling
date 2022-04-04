@@ -1,10 +1,10 @@
 package com.polling.grpc.notification.service;
 
 import com.polling.aop.annotation.Trace;
-import com.polling.grpc.EventServiceGrpc;
 import com.polling.grpc.GiftType;
 import com.polling.grpc.MailRequest;
 import com.polling.grpc.MailResponse;
+import com.polling.grpc.NotificationMailServiceGrpc;
 import com.polling.grpc.ResultStatus;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class NotificationMailService extends EventServiceGrpc.EventServiceImplBase {
+public class NotificationMailService extends NotificationMailServiceGrpc.NotificationMailServiceImplBase {
 
   private final JavaMailSender mailSender;
 

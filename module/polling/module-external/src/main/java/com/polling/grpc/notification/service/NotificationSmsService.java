@@ -2,10 +2,10 @@ package com.polling.grpc.notification.service;
 
 import com.google.gson.Gson;
 import com.polling.grpc.ListOfNotificationRequest;
-import com.polling.grpc.NotificationRequest;
-import com.polling.grpc.NotificationResponse;
-import com.polling.grpc.NotificationServiceGrpc;
+import com.polling.grpc.NotificationSmsServiceGrpc;
 import com.polling.grpc.ResultStatus;
+import com.polling.grpc.SMSRequest;
+import com.polling.grpc.SMSResponse;
 import com.polling.grpc.notification.dto.request.SendSMSApiRequestDto;
 import com.polling.grpc.notification.dto.request.SendSMSRequestDto;
 import io.grpc.Status;
@@ -34,7 +34,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class NotificationSmsService extends NotificationServiceGrpc.NotificationServiceImplBase {
+public class NotificationSmsService extends NotificationSmsServiceGrpc.NotificationSmsServiceImplBase {
 
   //    private final NotificationClient notificationClient;
   private final Gson gson;
@@ -53,14 +53,14 @@ public class NotificationSmsService extends NotificationServiceGrpc.Notification
 //    }
 
   @Override
-  public void sendNotification(ListOfNotificationRequest request,
-      StreamObserver<NotificationResponse> responseObserver) {
+  public void sendSms(ListOfNotificationRequest request,
+      StreamObserver<SMSResponse> responseObserver) {
     try {
       //protobuf를 arrayList로 매핑
-      int size = request.getNotificationRequestCount();
+      int size = request.getSmsRequestCount();
       List<SendSMSRequestDto> message = new ArrayList<>();
       for (int i = 0; i < size; i++) {
-        NotificationRequest notificationRequest = request.getNotificationRequest(i);
+        SMSRequest notificationRequest = request.getSmsRequest(i);
         SendSMSRequestDto requestDto = new SendSMSRequestDto(notificationRequest.getTo(),
             notificationRequest.getContent());
         message.add(requestDto);
@@ -69,7 +69,7 @@ public class NotificationSmsService extends NotificationServiceGrpc.Notification
       String randomCode = sendSmsServer(message);
 
       responseObserver.onNext(
-          NotificationResponse.newBuilder()
+          SMSResponse.newBuilder()
               .setStatus(ResultStatus.newBuilder()
                   .setCode(Status.OK.getCode().value())
                   .setMessage("Notification SUCCESS!!!")
